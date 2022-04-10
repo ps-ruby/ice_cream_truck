@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'djoser',
     'rest_framework.authtoken',
     'user',
+    'food_items',
 ]
 
 REST_FRAMEWORK = {
