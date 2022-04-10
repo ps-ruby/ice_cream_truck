@@ -9,8 +9,10 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, related_name='order_items', on_delete=models.CASCADE)
     food_item = models.ForeignKey(FoodItem, on_delete=models.CASCADE)
     price = models.FloatField(max_length=5)
     quantity = models.IntegerField(default=1)
 
+    class Meta:
+        unique_together = [['order', 'food_item']]

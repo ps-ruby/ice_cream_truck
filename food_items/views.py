@@ -5,12 +5,13 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import *
 from .models import *
+from django.shortcuts import get_object_or_404
 
 
 class FoodItemViews(APIView):
-    def get(self, request, id=None, truck_id=None):
+    def get(self, request, id=None):
         if id:
-            item = FoodItem.objects.get(id=id)
+            item = get_object_or_404(FoodItem, pk=id)
             serializer = FoodItemSerializer(item)
             return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
 
