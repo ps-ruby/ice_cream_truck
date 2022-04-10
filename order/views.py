@@ -21,3 +21,12 @@ class OrderViews(APIView):
 
         serializer = OrderSerializer(orders, many=True)
         return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        serializer = CreateOrderSerializer(data={**request.data, 'user': request.user.id})
+        if serializer.is_valid():
+            serializer.save()
+            return Response("ENJOY!", status=status.HTTP_200_OK)
+        else:
+            # return Response({"status": "error", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+            return Response("SORRY!", status=status.HTTP_400_BAD_REQUEST)
