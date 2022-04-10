@@ -18,3 +18,15 @@ class FoodItemViews(APIView):
         items = FoodItem.objects.all()
         serializer = FoodItemSerializer(items, many=True)
         return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
+
+
+class TruckViews(APIView):
+    def get(self, request, id=None):
+        if id:
+            item = get_object_or_404(Truck, pk=id)
+            serializer = TruckListSerializer(item)
+            return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
+
+        items = Truck.objects.all()
+        serializer = TruckListSerializer(items, many=True)
+        return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)

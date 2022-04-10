@@ -19,7 +19,7 @@ class FoodItem(models.Model):
     name = models.CharField(max_length=32)
     price = models.FloatField(max_length=5)
     quantity = models.IntegerField(default=0)
-    truck = models.ForeignKey(Truck, on_delete=models.CASCADE)
+    truck = models.ForeignKey(Truck, related_name='food_items', on_delete=models.CASCADE)
     flavors = models.ManyToManyField(Flavor)
 
     def __str__(self):

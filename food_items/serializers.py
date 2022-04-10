@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import *
+from order.models import *
 
 
 class FlavorSerializer(serializers.ModelSerializer):
@@ -24,3 +25,19 @@ class FoodItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = FoodItem
         fields = '__all__'
+
+
+class TruckListSerializer(serializers.ModelSerializer):
+    food_items = FoodItemSerializer(many=True)
+    total_amount = serializers.SerializerMethodField()
+
+    def get_total_amount(self, obj):
+        total = 0.0
+        for item in OrderItem.objects.filter(food_item__truck_id=obj.id):
+            print(item.price)
+            total += (item.quantity * item.price)
+        return total
+
+    class Meta:
+        model = Truck
+        fields = ('id', 'name', 'food_items', 'total_amount')
